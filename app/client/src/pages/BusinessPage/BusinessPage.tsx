@@ -4,11 +4,11 @@ import { Construction } from 'lucide-react';
 import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
 import { StatusCard } from '@client/components/index.js';
 
-const StorePage = () => {
+const BusinessPage = () => {
 	const { ui } = useOutletContext<AppOutletContext>();
 
 	useEffect(() => {
-		document.title = `Store | ${ui.appName}`;
+		document.title = `Chat | ${ui.appName}`;
 	}, [ui.appName]);
 
 	return (
@@ -23,4 +23,4 @@ const StorePage = () => {
 	);
 };
 
-export default StorePage;
+export default BusinessPage;

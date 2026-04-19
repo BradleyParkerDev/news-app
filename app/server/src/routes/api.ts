@@ -5,6 +5,7 @@ import express from 'express';
 import authRouter from './api/auth.js';
 import imageRouter from './api/image.js';
 import userRouter from './api/user.js';
+import newsRouter from './api/news.js';
 import uiRouter from './api/ui.js';
 import devRouter from './api/dev/index.js';
 
@@ -15,6 +16,7 @@ const router = express.Router();
 router.use('/auth', authRouter);
 router.use('/image', imageRouter);
 router.use('/user', userRouter);
+router.use('/news', newsRouter);
 router.use('/ui', uiRouter);
 
 // Logs to server.log when vite dev server hits it

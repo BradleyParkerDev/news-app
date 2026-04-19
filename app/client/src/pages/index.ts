@@ -2,23 +2,28 @@ import Layout from './Layout/Layout.js';
 import HomePage from './HomePage/HomePage.js';
 import AuthPage from './AuthPage/AuthPage.js';
 import UserPage from './UserPage/UserPage.js';
-import ChatPage from './ChatPage/ChatPage.js';
-import UserImagesPage from './UserImagesPage/UserImagesPage.js';
-import NewsPage from './NewsPage/NewsPage.js';
-import FriendPage from './FriendPage/FriendPage.js';
-import StorePage from './StorePage/StorePage.js';
+import BusinessPage from './BusinessPage/BusinessPage.js';
+import EntertainmentPage from './EntertainmentPage/EntertainmentPage.js';
+import GeneralPage from './GeneralPage/GeneralPage.js';
+import HealthPage from './HealthPage/HealthPage.js';
+import SciencePage from './SciencePage/SciencePage.js';
+import SportsPage from './SportsPage/SportsPage.js';
+import TechnologyPage from './TechnologyPage/TechnologyPage.js';
 import SettingsPage from './SettingsPage/SettingsPage.js';
 import NotFoundPage from './NotFoundPage/NotFoundPage.js';
+
 export const pages = {
 	Layout,
 	HomePage,
 	AuthPage,
 	UserPage,
-	ChatPage,
-	UserImagesPage,
-	NewsPage,
-	FriendPage,
-	StorePage,
+	BusinessPage,
+	EntertainmentPage,
+	GeneralPage,
+	HealthPage,
+	SciencePage,
+	SportsPage,
+	TechnologyPage,
 	SettingsPage,
 	NotFoundPage,
 };

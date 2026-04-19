@@ -4,11 +4,11 @@ import { Construction } from 'lucide-react';
 import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
 import { StatusCard } from '@client/components/index.js';
 
-const FriendPage = () => {
+const SportsPage = () => {
 	const { ui } = useOutletContext<AppOutletContext>();
 
 	useEffect(() => {
-		document.title = `Friends | ${ui.appName}`;
+		document.title = `Images | ${ui.appName}`;
 	}, [ui.appName]);
 
 	return (
@@ -23,4 +23,4 @@ const FriendPage = () => {
 	);
 };
 
-export default FriendPage;
+export default SportsPage;

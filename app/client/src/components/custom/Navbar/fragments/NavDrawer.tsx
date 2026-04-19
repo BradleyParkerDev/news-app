@@ -13,13 +13,16 @@ import {
 } from './NavUserAvatar.js';
 
 import {
-	MessageCircle as Chat,
-	CameraIcon as Images,
-	Contact as Friends,
-	Newspaper as News,
-	StoreIcon as Store,
+	Briefcase as Business,
+	Clapperboard as Entertainment,
+	Newspaper as General,
+	HeartPulse as Health,
+	FlaskConical as Science,
+	Trophy as Sports,
+	Cpu as Technology,
 	Settings,
 } from 'lucide-react';
+
 import { useLocation } from 'react-router-dom';
 
 type NavDrawerProps = {
@@ -29,11 +32,13 @@ type NavDrawerProps = {
 };
 
 const navItems = [
-	{ label: 'Chat', icon: <Chat />, path: '/chat' },
-	{ label: 'Friends', icon: <Friends />, path: '/friends' },
-	{ label: 'Images', icon: <Images />, path: '/images' },
-	{ label: 'News', icon: <News />, path: '/news' },
-	{ label: 'Store', icon: <Store />, path: '/store' },
+	{ label: 'Business', icon: <Business />, path: '/business' },
+	{ label: 'Entertainment', icon: <Entertainment />, path: '/entertainment' },
+	{ label: 'General', icon: <General />, path: '/general' },
+	{ label: 'Health', icon: <Health />, path: '/health' },
+	{ label: 'Science', icon: <Science />, path: '/science' },
+	{ label: 'Sports', icon: <Sports />, path: '/sports' },
+	{ label: 'Technology', icon: <Technology />, path: '/technology' },
 ];
 
 export const NavDrawer = ({ ui, auth, user }: NavDrawerProps) => {
