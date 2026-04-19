@@ -1,18 +1,34 @@
 import dotenv from 'dotenv';
-import { type APIResultType, HTTPStatus } from '@shared/types/common/index.js';
-
-dotenv.config();
-
-const newsAPIKey = process.env.NEWS_API_KEY;
+import type { PageContent } from '@shared/types/common/index.js';
+import { newsClient } from './newsClient.js';
 
 export const newsHelper = {
-	async fetchTopStories() {},
-	async fetchBusiness() {},
-	async fetchEntertainment() {},
-	async fetchGeneral() {},
-	async fetchHealth() {},
-	async fetchScience() {},
-	async fetchSports() {},
-	async fetchTechnology() {},
-	async fetchSavedArticles() {},
+	client: newsClient,
+	async fetchTopStories(): Promise<PageContent> {
+		return {};
+	},
+	async fetchBusiness(): Promise<PageContent> {
+		return {};
+	},
+	async fetchEntertainment(): Promise<PageContent> {
+		return {};
+	},
+	async fetchGeneral(): Promise<PageContent> {
+		return {};
+	},
+	async fetchHealth(): Promise<PageContent> {
+		return {};
+	},
+	async fetchScience(): Promise<PageContent> {
+		return {};
+	},
+	async fetchSports(): Promise<PageContent> {
+		return {};
+	},
+	async fetchTechnology(): Promise<PageContent> {
+		return {};
+	},
+	async fetchSavedArticles(): Promise<PageContent> {
+		return {};
+	},
 };

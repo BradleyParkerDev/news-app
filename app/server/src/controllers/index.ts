@@ -17,7 +17,7 @@ import getCurrentPageState from './ui/getCurrentPageState.js';
 import updateUserTheme from './ui/updateUserTheme.js';
 
 // news controller
-import getTopStoriesArticles from './news/topStories/topStories.js';
+import getTopHeadlinesArticles from './news/topHeadlines/topHeadlines.js';
 import getBusienssArticles from './news/business/business.js';
 import getEntertainmentArticles from './news/entertainment/entertainment.js';
 import getGeneralArticles from './news/general/general.js';
@@ -54,7 +54,7 @@ export const uiController = {
 };
 
 export const newsController = {
-	getTopStoriesArticles,
+	getTopHeadlinesArticles,
 	getBusienssArticles,
 	getEntertainmentArticles,
 	getGeneralArticles,

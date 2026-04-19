@@ -8,17 +8,19 @@ import {
 	loadCurrentPageState,
 } from '@shared/redux/slices/ui/uiSlice.js';
 import { setAuth } from '@shared/redux/slices/auth/authSlice.js';
-import { userHelper } from '../user/userHelper.js';
-import { imageHelper } from '../image/imageHelper.js';
+import { userHelper, imageHelper, newsHelper } from '../index.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
 import { createStore } from '@shared/redux/store.js';
-import type { UserThemeType } from '@shared/types/common/UserThemeType.js';
+import type { PageContent, UserThemeType } from '@shared/types/common/index.js';
 
 export const createPageContextHelper = (req?: Request, res?: Response) => {
+	// Build the full request URL when Express request data is available.
 	const url = req
 		? `${req.protocol}://${req.get('host')}${req.originalUrl}`
 		: '';
 
+	// Extract only the pathname from a full URL.
+	// Fallback to the raw input if URL parsing fails.
 	const getPathOnly = (inputUrl: string) => {
 		if (!inputUrl) return '';
 
@@ -30,23 +32,40 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 		}
 	};
 
+	// Create a fresh Redux store for this request context.
 	const store: AppStore = createStore();
+
+	// Get the current route path without query parameters.
 	const path = getPathOnly(url);
 
 	const pageContextHelper = {
+		// Raw request/response objects from Express.
 		req,
 		res,
+
+		// Full URL and pathname for the current request.
 		url,
 		path,
+
+		// Query params from the request.
 		query: req?.query ?? {},
+
+		// Per-request Redux store.
 		store,
 
+		// News helper for fetching page-specific news content.
+		news: newsHelper,
+
+		// Load app-wide and page-specific data into Redux for the current request.
 		async loadAppDataIntoRedux(userTheme: UserThemeType) {
 			const appName = process.env.UI_APP_NAME ?? '';
 			const userId = this.req?.body?.userId;
 
+			// Always load the selected theme into Redux first.
 			this.store.dispatch(setTheme({ theme: userTheme }));
 
+			// If a user ID exists on the request, attempt to load the user
+			// and associated profile image into Redux.
 			if (userId) {
 				const user = await userHelper.getUserData({ userId });
 
@@ -63,16 +82,21 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 						}),
 					);
 				} else {
+					// User ID was present, but no matching user was found.
 					this.store.dispatch(setAuth({ isAuth: false }));
 				}
 			} else {
+				// No user ID on the request, so mark the session as unauthenticated.
 				this.store.dispatch(setAuth({ isAuth: false }));
 			}
 
+			// Load app-level metadata.
 			this.store.dispatch(setAppName({ appName }));
 
+			// Resolve content for the current page/route.
 			const pageContent = await this.getPageContent();
 
+			// Store the current page state in Redux so the UI can hydrate from it.
 			this.store.dispatch(
 				loadCurrentPageState({
 					currentPage: {
@@ -88,10 +112,39 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 			);
 		},
 
-		async getPageContent() {
+		// Return content based on the current route path.
+		async getPageContent(): Promise<PageContent> {
 			switch (this.path) {
+				// Home page
 				case '/':
 					return {};
+
+				// News category pages
+				case '/top-stories':
+					return await this.news.fetchTopStories();
+
+				case '/business':
+					return await this.news.fetchBusiness();
+
+				case '/entertainment':
+					return await this.news.fetchEntertainment();
+
+				case '/general':
+					return await this.news.fetchGeneral();
+
+				case '/health':
+					return await this.news.fetchHealth();
+
+				case '/science':
+					return await this.news.fetchScience();
+
+				case '/sports':
+					return await this.news.fetchSports();
+
+				case '/technology':
+					return await this.news.fetchTechnology();
+
+				// Fallback for routes with no defined page content yet.
 				default:
 					return {};
 			}

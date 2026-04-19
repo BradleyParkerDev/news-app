@@ -10,7 +10,7 @@ import {
 
 dotenv.config();
 
-const getTopStoriesArticles = async (
+const getTopHeadlinesArticles = async (
 	req: Request,
 	res: Response,
 ): Promise<void> => {
@@ -18,4 +18,4 @@ const getTopStoriesArticles = async (
 	const ui = createUiService(req, res);
 };
 
-export default getTopStoriesArticles;
+export default getTopHeadlinesArticles;

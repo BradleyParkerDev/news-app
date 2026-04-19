@@ -27,7 +27,7 @@ export const useUIPageHelper = () => {
 
 		const getPageData = async () => {
 			try {
-				const response =
+				const pageContent =
 					await clientApiServices.ui.fetchCurrentpageState(path);
 
 				if (!isMounted) return;
@@ -36,8 +36,8 @@ export const useUIPageHelper = () => {
 					loadCurrentPageState({
 						currentPage: {
 							path,
-							content: response.content ?? {},
-							isLoading: response.isLoading ?? false,
+							content: pageContent,
+							isLoading: false,
 						},
 					}),
 				);

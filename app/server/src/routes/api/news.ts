@@ -4,7 +4,7 @@ import { newsController } from '@server/controllers/index.js';
 const router = express.Router();
 
 // News API
-router.get('/top-stories', newsController.getTopStoriesArticles);
+router.get('/top-headlines', newsController.getTopHeadlinesArticles);
 router.get('/business', newsController.getBusienssArticles);
 router.get('/entertainment', newsController.getEntertainmentArticles);
 router.get('/general', newsController.getGeneralArticles);
