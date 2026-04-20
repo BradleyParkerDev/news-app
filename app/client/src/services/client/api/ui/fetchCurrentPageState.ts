@@ -7,12 +7,10 @@ import type {
 export const fetchCurrentpageState = async (
 	path: string,
 ): Promise<PageContent> => {
-	const response = await api.get<APIResponseType<PageContent>>(
-		'/news/get-page-state',
-		{
-			params: { path: path },
-		},
-	);
+	console.log(`${path}`);
+	const response = await api.get<APIResponseType<PageContent>>('/news', {
+		params: { path: path },
+	});
 
 	return response.data.data;
 };

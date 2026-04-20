@@ -9,6 +9,7 @@ router.get('/business', newsController.getBusienssArticles);
 router.get('/entertainment', newsController.getEntertainmentArticles);
 router.get('/general', newsController.getGeneralArticles);
 router.get('/health', newsController.getHealthArticles);
+router.get('/saved-articles', newsController.getSavedArticles);
 router.get('/science', newsController.getScienceArticles);
 router.get('/sports', newsController.getSportsArticles);
 router.get('/technology', newsController.getTechnologyArticles);

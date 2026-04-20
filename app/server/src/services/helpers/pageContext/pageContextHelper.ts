@@ -120,8 +120,8 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 					return {};
 
 				// News category pages
-				case '/top-stories':
-					return await this.news.fetchTopStories();
+				case '/top-headlines':
+					return await this.news.fetchTopHeadlines();
 
 				case '/business':
 					return await this.news.fetchBusiness();
@@ -134,6 +134,9 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 
 				case '/health':
 					return await this.news.fetchHealth();
+
+				case '/saved-articles':
+					return await this.news.fetchSavedArticles();
 
 				case '/science':
 					return await this.news.fetchScience();

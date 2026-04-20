@@ -4,31 +4,40 @@ import { newsClient } from './newsClient.js';
 
 export const newsHelper = {
 	client: newsClient,
-	async fetchTopStories(): Promise<PageContent> {
-		return {};
+
+	async fetchTopHeadlines(): Promise<PageContent> {
+		return { category: 'Top Headlines', working: true };
 	},
+
 	async fetchBusiness(): Promise<PageContent> {
-		return {};
+		return { category: 'Business', working: true };
 	},
+
 	async fetchEntertainment(): Promise<PageContent> {
-		return {};
+		return { category: 'Entertainment', working: true };
 	},
+
 	async fetchGeneral(): Promise<PageContent> {
-		return {};
+		return { category: 'General', working: true };
 	},
+
 	async fetchHealth(): Promise<PageContent> {
-		return {};
+		return { category: 'Health', working: true };
 	},
-	async fetchScience(): Promise<PageContent> {
-		return {};
-	},
-	async fetchSports(): Promise<PageContent> {
-		return {};
-	},
-	async fetchTechnology(): Promise<PageContent> {
-		return {};
-	},
+
 	async fetchSavedArticles(): Promise<PageContent> {
-		return {};
+		return { category: 'Saved Articles', working: true };
+	},
+
+	async fetchScience(): Promise<PageContent> {
+		return { category: 'Science', working: true };
+	},
+
+	async fetchSports(): Promise<PageContent> {
+		return { category: 'Sports', working: true };
+	},
+
+	async fetchTechnology(): Promise<PageContent> {
+		return { category: 'Technology', working: true };
 	},
 };

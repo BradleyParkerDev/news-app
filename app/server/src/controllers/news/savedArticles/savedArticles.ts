@@ -10,10 +10,7 @@ import {
 
 dotenv.config();
 
-const getTopHeadlinesArticles = async (
-	req: Request,
-	res: Response,
-): Promise<void> => {
+const getSavedArticles = async (req: Request, res: Response): Promise<void> => {
 	const auth = createAuthService(req, res);
 	const ui = createUiService(req, res);
 	const path = req.query.path;
@@ -28,4 +25,4 @@ const getTopHeadlinesArticles = async (
 	};
 };
 
-export default getTopHeadlinesArticles;
+export default getSavedArticles;

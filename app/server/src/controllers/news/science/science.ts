@@ -16,6 +16,16 @@ const getScienceArticles = async (
 ): Promise<void> => {
 	const auth = createAuthService(req, res);
 	const ui = createUiService(req, res);
+	const path = req.query.path;
+
+	const currentPage = ui.page.getPageContent();
+
+	const response: APIResponseType<typeof currentPage> = {
+		success: true,
+		message: `User wants data from this path: ${path}`,
+		statusCode: HTTPStatus.OK,
+		data: currentPage,
+	};
 };
 
 export default getScienceArticles;

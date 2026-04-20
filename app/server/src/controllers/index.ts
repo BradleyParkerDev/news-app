@@ -22,6 +22,7 @@ import getBusienssArticles from './news/business/business.js';
 import getEntertainmentArticles from './news/entertainment/entertainment.js';
 import getGeneralArticles from './news/general/general.js';
 import getHealthArticles from './news/health/health.js';
+import getSavedArticles from './news/savedArticles/savedArticles.js';
 import getScienceArticles from './news/science/science.js';
 import getSportsArticles from './news/sports/sports.js';
 import getTechnologyArticles from './news/technology/technology.js';
@@ -59,6 +60,7 @@ export const newsController = {
 	getEntertainmentArticles,
 	getGeneralArticles,
 	getHealthArticles,
+	getSavedArticles,
 	getScienceArticles,
 	getSportsArticles,
 	getTechnologyArticles,
