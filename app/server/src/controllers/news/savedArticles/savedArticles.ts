@@ -4,18 +4,18 @@ import { createAuthService, createUiService } from '@server/services/index.js';
 import dotenv from 'dotenv';
 import {
 	type APIResponseType,
-	type LoginCredentialsDataType,
 	HTTPStatus,
 } from '@shared/types/common/index.js';
 
 dotenv.config();
 
 const getSavedArticles = async (req: Request, res: Response): Promise<void> => {
-	const auth = createAuthService(req, res);
+	createAuthService(req, res);
 	const ui = createUiService(req, res);
 	const path = req.query.path;
+	const sessionId = req.body?.sessionId ?? 'unknown';
 
-	const currentPage = ui.page.getPageContent();
+	const currentPage = await ui.page.getPageContent();
 
 	const response: APIResponseType<typeof currentPage> = {
 		success: true,
@@ -23,6 +23,12 @@ const getSavedArticles = async (req: Request, res: Response): Promise<void> => {
 		statusCode: HTTPStatus.OK,
 		data: currentPage,
 	};
+
+	loggerFactory.news.info(
+		`GET - ${req.originalUrl} - sessionId: ${sessionId}`,
+	);
+
+	res.status(HTTPStatus.OK).json(response);
 };
 
 export default getSavedArticles;

@@ -32,6 +32,29 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 		}
 	};
 
+	const normalizeRoutePath = (inputPath: string) => {
+		const pathOnly = getPathOnly(inputPath).trim();
+
+		if (!pathOnly) {
+			return '/';
+		}
+
+		const normalizedPath = pathOnly.startsWith('/')
+			? pathOnly
+			: `/${pathOnly}`;
+
+		if (normalizedPath === '/api/news') {
+			return '/';
+		}
+
+		if (normalizedPath.startsWith('/api/news/')) {
+			const newsPath = normalizedPath.replace('/api/news', '');
+			return newsPath || '/';
+		}
+
+		return normalizedPath;
+	};
+
 	// Create a fresh Redux store for this request context.
 	const store: AppStore = createStore();
 
@@ -113,8 +136,17 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 		},
 
 		// Return content based on the current route path.
-		async getPageContent(): Promise<PageContent> {
-			switch (this.path) {
+		async getPageContent(pathOverride?: string): Promise<PageContent> {
+			const requestedPath =
+				typeof pathOverride === 'string' && pathOverride.length > 0
+					? pathOverride
+					: typeof this.query.path === 'string' && this.query.path.length > 0
+						? this.query.path
+						: this.path;
+
+			const resolvedPath = normalizeRoutePath(requestedPath);
+
+			switch (resolvedPath) {
 				// Home page
 				case '/':
 					return {};

@@ -46,6 +46,7 @@ export const useUIPageHelper = () => {
 
 				if (!isMounted) return;
 
+				console.log(pageContent);
 				dispatch(
 					loadCurrentPageState({
 						currentPage: {

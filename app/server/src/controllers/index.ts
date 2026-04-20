@@ -18,7 +18,7 @@ import updateUserTheme from './ui/updateUserTheme.js';
 
 // news controller
 import getTopHeadlinesArticles from './news/topHeadlines/topHeadlines.js';
-import getBusienssArticles from './news/business/business.js';
+import getBusinessArticles from './news/business/business.js';
 import getEntertainmentArticles from './news/entertainment/entertainment.js';
 import getGeneralArticles from './news/general/general.js';
 import getHealthArticles from './news/health/health.js';
@@ -56,7 +56,7 @@ export const uiController = {
 
 export const newsController = {
 	getTopHeadlinesArticles,
-	getBusienssArticles,
+	getBusinessArticles,
 	getEntertainmentArticles,
 	getGeneralArticles,
 	getHealthArticles,
