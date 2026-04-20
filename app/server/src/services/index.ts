@@ -1,3 +1,3 @@
-export { createAuthService } from './auth/authService.js';
-export { createUiService } from './ui/uiService.js';
-export { cronService } from './cron/index.js';
+export { createAuthService } from './main/auth/authService.js';
+export { createUiService } from './main/ui/uiService.js';
+export { cronService } from './main/cron/index.js';
