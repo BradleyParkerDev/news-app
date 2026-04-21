@@ -13,7 +13,6 @@ import updateUser from './user/updateUser.js';
 import deleteUser from './user/deleteUser.js';
 
 // ui controller
-import getCurrentPageState from './ui/getCurrentPageState.js';
 import updateUserTheme from './ui/updateUserTheme.js';
 
 // news controller
@@ -50,7 +49,6 @@ export const userController = {
 };
 
 export const uiController = {
-	getCurrentPageState,
 	updateUserTheme,
 };
 
