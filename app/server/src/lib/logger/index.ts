@@ -111,6 +111,7 @@ export const loggerFactory = {
 	authService: createNewLogger('auth', 'services'),
 	cron: createNewLogger('cron', 'services'),
 	uiService: createNewLogger('ui', 'services'),
+	externalAPI: createNewLogger('externalAPI', 'services'),
 };
 
 // Export the main logger as default

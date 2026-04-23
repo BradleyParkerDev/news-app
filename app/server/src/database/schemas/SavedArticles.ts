@@ -1,4 +1,3 @@
-// SavedArticles.ts
 import { pgTable, uuid, timestamp } from 'drizzle-orm/pg-core';
 import { User } from './Users.js';
 import { Article } from './Articles.js';

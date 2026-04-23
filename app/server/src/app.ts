@@ -11,6 +11,8 @@ import apiRouter from './routes/api.js';
 import webRouter from './routes/web.js';
 import { cronService } from '@server/services/index.js';
 import middleware from '@server/middleware/index.js';
+import { newsHelper } from '@server/services/helpers/index.js';
+
 // Load environment variables from .env file
 dotenv.config();
 
@@ -136,6 +138,10 @@ app.use((err: unknown, req: express.Request, res: express.Response) => {
 /**
  * Default export: the configured Express app.
  */
+
+const news = newsHelper;
+
+news.fetchLatestArticlesFromAPI();
 
 cronService.startAll();
 export default app;

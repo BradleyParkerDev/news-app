@@ -15,6 +15,9 @@ declare namespace NodeJS {
 		LOCAL_DATABASE_URL: string;
 		JWT_SECRET_KEY: string;
 		NEWS_API_KEY: string;
+		NEWS_API_CALL_FREQUENCY: string;
+		CALL_NEWS_API_MINUTES: string;
+		CALL_NEWS_API_HOURS: string;
 
 		// Add other environment variables here
 	}
