@@ -6,7 +6,7 @@ import {
 	articleCategories,
 	type NewsAPIArticleType,
 	type NewsAPIResponseType,
-} from '@shared/types/server/news/NewsAPITypes.js';
+} from '@/shared/types/common/news/NewsArticleTypes.js';
 import { APICall, Article } from '@server/database/schemas/index.js';
 import { db } from '@server/database/db.js';
 import { eq } from 'drizzle-orm';

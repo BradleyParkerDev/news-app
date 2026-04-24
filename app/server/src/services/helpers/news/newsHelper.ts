@@ -4,20 +4,31 @@ import { newsClient } from './newsClient.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
 import { Article } from '@server/database/schemas/Articles.js';
 import { db } from '@server/database/db.js';
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 
 export const newsHelper = {
 	client: newsClient,
 
 	async fetchTopHeadlines(): Promise<PageContent> {
-		return { category: 'Top Headlines', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.orderBy(desc(Article.publishedAt));
+
+		return {
+			category: 'Top Headlines',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchBusiness(): Promise<PageContent> {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'business'));
+			.where(eq(Article.category, 'business'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'Business',
@@ -31,7 +42,8 @@ export const newsHelper = {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'entertainment'));
+			.where(eq(Article.category, 'entertainment'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'Entertainment',
@@ -45,7 +57,8 @@ export const newsHelper = {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'general'));
+			.where(eq(Article.category, 'general'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'General',
@@ -59,7 +72,8 @@ export const newsHelper = {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'health'));
+			.where(eq(Article.category, 'health'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'Health',
@@ -73,7 +87,8 @@ export const newsHelper = {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'science'));
+			.where(eq(Article.category, 'science'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'Science',
@@ -87,7 +102,8 @@ export const newsHelper = {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'sports'));
+			.where(eq(Article.category, 'sports'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'Sports',
@@ -101,7 +117,8 @@ export const newsHelper = {
 		const articles = await db
 			.select()
 			.from(Article)
-			.where(eq(Article.category, 'technology'));
+			.where(eq(Article.category, 'technology'))
+			.orderBy(desc(Article.publishedAt));
 
 		return {
 			category: 'Technology',

@@ -8,7 +8,7 @@ import {
 } from './helpers/index.js';
 
 export const useUIUtility = () => {
-	const appName = useAppSelector((state) => state.ui.appName);
+	const { appName, currentPage } = useAppSelector((state) => state.ui);
 
 	const themeHelper = useUIThemeHelper();
 	const navHelper = useUINavHelper();
@@ -22,6 +22,7 @@ export const useUIUtility = () => {
 
 	return {
 		appName,
+		currentPage,
 		...themeHelper,
 		...navHelper,
 		...formHelper,
