@@ -1,0 +1,9 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { cn } from '../../lib/utils.js';
+import { Button } from '../../components/shadcn/button.js';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from '../../components/shadcn/card.js';
+import { Input } from '../../components/shadcn/input.js';
+import { Label } from '../../components/shadcn/label.js';
+export function LoginForm({ className, ...props }) {
+    return (_jsx("div", { className: cn('flex flex-col gap-6', className), ...props, children: _jsxs(Card, { children: [_jsxs(CardHeader, { children: [_jsx(CardTitle, { className: "text-2xl", children: "Login" }), _jsx(CardDescription, { children: "Enter your email below to login to your account" })] }), _jsx(CardContent, { children: _jsxs("form", { children: [_jsxs("div", { className: "flex flex-col gap-6", children: [_jsxs("div", { className: "grid gap-2", children: [_jsx(Label, { htmlFor: "email", children: "Email" }), _jsx(Input, { id: "email", type: "email", placeholder: "m@example.com", required: true })] }), _jsxs("div", { className: "grid gap-2", children: [_jsxs("div", { className: "flex items-center", children: [_jsx(Label, { htmlFor: "password", children: "Password" }), _jsx("a", { href: "#", className: "ml-auto inline-block text-sm underline-offset-4 hover:underline", children: "Forgot your password?" })] }), _jsx(Input, { id: "password", type: "password", required: true })] }), _jsx(Button, { type: "submit", className: "w-full", children: "Login" }), _jsx(Button, { variant: "outline", className: "w-full", children: "Login with Google" })] }), _jsxs("div", { className: "mt-4 text-center text-sm", children: ["Don't have an account?", ' ', _jsx("a", { href: "#", className: "underline underline-offset-4", children: "Sign up" })] })] }) })] }) }));
+}

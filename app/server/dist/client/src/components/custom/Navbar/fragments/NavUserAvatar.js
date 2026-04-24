@@ -1,0 +1,11 @@
+import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from 'react';
+import * as AvatarPrimitive from '@radix-ui/react-avatar';
+import { cn } from '../../../../lib/utils.js';
+const NavUserAvatar = React.forwardRef(({ className, ...props }, ref) => (_jsx(AvatarPrimitive.Root, { ref: ref, className: cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className), ...props })));
+NavUserAvatar.displayName = AvatarPrimitive.Root.displayName;
+const NavUserAvatarImage = React.forwardRef(({ className, ...props }, ref) => (_jsx(AvatarPrimitive.Image, { ref: ref, className: cn('aspect-square h-full w-full', className), ...props })));
+NavUserAvatarImage.displayName = AvatarPrimitive.Image.displayName;
+const NavUserAvatarFallback = React.forwardRef(({ className, ...props }, ref) => (_jsx(AvatarPrimitive.Fallback, { ref: ref, className: cn('bg-muted text-foreground flex h-full w-full items-center justify-center rounded-full text-xs font-semibold uppercase select-none', className), ...props })));
+NavUserAvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
+export { NavUserAvatar, NavUserAvatarImage, NavUserAvatarFallback };
