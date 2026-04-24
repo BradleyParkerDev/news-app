@@ -17,6 +17,7 @@ SELECT * FROM users;
 SELECT * FROM sessions;
 SELECT * FROM user_themes;
 SELECT * FROM user_profile_images;
+SELECT * FROM api_calls;
 SELECT * FROM articles;
 SELECT * FROM saved_articles;
 
@@ -30,6 +31,7 @@ DELETE FROM user_profile_images;
 DELETE FROM user_themes;
 DELETE FROM sessions;
 DELETE FROM articles;
+DELETE FROM api_calls;
 DELETE FROM users;
 
 
@@ -42,6 +44,7 @@ DROP TABLE IF EXISTS user_profile_images CASCADE;
 DROP TABLE IF EXISTS user_themes CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS articles CASCADE;
+DROP TABLE IF EXISTS api_calls CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 DROP TYPE IF EXISTS news_category CASCADE;
