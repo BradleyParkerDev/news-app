@@ -116,7 +116,13 @@ export const newsClient = {
 
 			// If NewsAPI doesn't exist in database, create it and return null.
 			if (!apiCallRecord) {
-				await db.insert(APICall).values({ apiName: this.apiName });
+				await db
+					.insert(APICall)
+					.values({ apiName: this.apiName, lastUpdated: null });
+				return null;
+			}
+
+			if (!apiCallRecord.lastUpdated) {
 				return null;
 			}
 

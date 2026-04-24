@@ -1,10 +1,11 @@
 import { uploadLogsToS3Bucket } from './jobs/uploadLogsToS3Bucket.js';
 import { pruneExpiredUserSessions } from './jobs/pruneExpiredUserSession.js';
+import { fetchNewArticlesFromNewsAPICron } from './jobs/news/fetchNewArticlesFromNewsAPICron.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
 
 const startAll = () => {
 	loggerFactory.cron?.info?.('[CRON] Starting cron jobs...');
-
+	fetchNewArticlesFromNewsAPICron();
 	pruneExpiredUserSessions();
 	// uploadLogsToS3Bucket();
 

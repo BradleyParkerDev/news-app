@@ -141,7 +141,7 @@ app.use((err: unknown, req: express.Request, res: express.Response) => {
 
 const news = newsHelper;
 
-// news.client.fetchLatestArticlesFromAPI();
+news.client.fetchLatestArticlesFromAPI();
 
 cronService.startAll();
 export default app;

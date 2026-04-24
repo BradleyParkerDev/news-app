@@ -7,8 +7,5 @@ export const APICall = pgTable('api_calls', {
 
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 
-	lastUpdated: timestamp('last_updated')
-		.defaultNow()
-		.$onUpdate(() => new Date())
-		.notNull(),
+	lastUpdated: timestamp('last_updated').$onUpdate(() => new Date()),
 });

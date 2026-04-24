@@ -4,15 +4,15 @@ import { db } from '@server/database/db.js';
 import { Article } from '@server/database/schemas/index.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
 import { newsHelper } from '@server/services/helpers/index.js';
-export const fetchNewArticlesFromNewsAPI = async () => {
-	cron.schedule('0 * * * *', async () => {
+export const fetchNewArticlesFromNewsAPICron = async () => {
+	cron.schedule('*/5 * * * *', async () => {
 		const now = new Date();
 		const news = newsHelper;
 
 		loggerFactory.cron?.info?.(
-			`[CRON][News] Fetching latest articles from NewsAPI.`,
+			`[CRON][NewsAPI] Fetching latest articles from NewsAPI.`,
 		);
-
+		news.client.fetchLatestArticlesFromAPI();
 		try {
 		} catch (error) {
 			loggerFactory.cron?.error?.(
