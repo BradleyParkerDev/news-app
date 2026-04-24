@@ -2,6 +2,9 @@ import dotenv from 'dotenv';
 import type { PageContent } from '@shared/types/common/index.js';
 import { newsClient } from './newsClient.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
+import { Article } from '@server/database/schemas/Articles.js';
+import { db } from '@server/database/db.js';
+import { eq } from 'drizzle-orm';
 
 export const newsHelper = {
 	client: newsClient,
@@ -11,31 +14,66 @@ export const newsHelper = {
 	},
 
 	async fetchBusiness(): Promise<PageContent> {
-		return { category: 'Business', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'business'));
+
+		return { category: 'Business', articles, working: true };
 	},
 
 	async fetchEntertainment(): Promise<PageContent> {
-		return { category: 'Entertainment', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'entertainment'));
+
+		return { category: 'Entertainment', articles, working: true };
 	},
 
 	async fetchGeneral(): Promise<PageContent> {
-		return { category: 'General', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'general'));
+
+		return { category: 'General', articles, working: true };
 	},
 
 	async fetchHealth(): Promise<PageContent> {
-		return { category: 'Health', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'health'));
+
+		return { category: 'Health', articles, working: true };
 	},
 
 	async fetchScience(): Promise<PageContent> {
-		return { category: 'Science', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'science'));
+
+		return { category: 'Science', articles, working: true };
 	},
 
 	async fetchSports(): Promise<PageContent> {
-		return { category: 'Sports', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'sports'));
+
+		return { category: 'Sports', articles, working: true };
 	},
 
 	async fetchTechnology(): Promise<PageContent> {
-		return { category: 'Technology', working: true };
+		const articles = await db
+			.select()
+			.from(Article)
+			.where(eq(Article.category, 'technology'));
+
+		return { category: 'Technology', articles, working: true };
 	},
 
 	async fetchSavedArticles(): Promise<PageContent> {
