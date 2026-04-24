@@ -19,7 +19,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'business'));
 
-		return { category: 'Business', articles, working: true };
+		return {
+			category: 'Business',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchEntertainment(): Promise<PageContent> {
@@ -28,7 +33,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'entertainment'));
 
-		return { category: 'Entertainment', articles, working: true };
+		return {
+			category: 'Entertainment',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchGeneral(): Promise<PageContent> {
@@ -37,7 +47,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'general'));
 
-		return { category: 'General', articles, working: true };
+		return {
+			category: 'General',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchHealth(): Promise<PageContent> {
@@ -46,7 +61,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'health'));
 
-		return { category: 'Health', articles, working: true };
+		return {
+			category: 'Health',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchScience(): Promise<PageContent> {
@@ -55,7 +75,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'science'));
 
-		return { category: 'Science', articles, working: true };
+		return {
+			category: 'Science',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchSports(): Promise<PageContent> {
@@ -64,7 +89,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'sports'));
 
-		return { category: 'Sports', articles, working: true };
+		return {
+			category: 'Sports',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchTechnology(): Promise<PageContent> {
@@ -73,7 +103,12 @@ export const newsHelper = {
 			.from(Article)
 			.where(eq(Article.category, 'technology'));
 
-		return { category: 'Technology', articles, working: true };
+		return {
+			category: 'Technology',
+			numberOfArticles: articles.length,
+			articles,
+			working: true,
+		};
 	},
 
 	async fetchSavedArticles(): Promise<PageContent> {

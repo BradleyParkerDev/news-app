@@ -140,7 +140,8 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 			const requestedPath =
 				typeof pathOverride === 'string' && pathOverride.length > 0
 					? pathOverride
-					: typeof this.query.path === 'string' && this.query.path.length > 0
+					: typeof this.query.path === 'string' &&
+						  this.query.path.length > 0
 						? this.query.path
 						: this.path;
 
@@ -149,8 +150,6 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 			switch (resolvedPath) {
 				// Home page
 				case '/':
-					return {};
-
 				// News category pages
 				case '/top-headlines':
 					return await this.news.fetchTopHeadlines();
@@ -181,6 +180,9 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 
 				// Fallback for routes with no defined page content yet.
 				default:
+					if (resolvedPath.startsWith('/user/')) {
+						return await this.news.fetchSavedArticles();
+					}
 					return {};
 			}
 		},
