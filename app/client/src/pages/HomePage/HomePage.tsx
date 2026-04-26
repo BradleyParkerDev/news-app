@@ -15,7 +15,22 @@ const HomePage = () => {
 	}, [ui.appName]);
 
 	return (
-		<div id="home-page" className="flex h-full w-full justify-center"></div>
+		<div id="home-page" className="flex w-full flex-col gap-6 py-4">
+			<div className="w-full px-4 sm:px-5">
+				<h1 className="font-primary text-2xl font-bold">
+					Top Headlines
+				</h1>
+			</div>
+
+			<div className="flex w-full flex-wrap justify-center gap-4 px-2">
+				{articles.map((article: SavedArticleType) => (
+					<NewsCard
+						key={article.articleId ?? article.url}
+						article={article}
+					/>
+				))}
+			</div>
+		</div>
 	);
 };
 
