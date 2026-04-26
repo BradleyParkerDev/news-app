@@ -10,3 +10,4 @@ export { HTTPStatus } from './http/HTTPStatus.js';
 export type { UserThemeType } from './UserThemeType.js';
 export type { LoginCredentialsDataType } from './LoginCredentialsDataType.js';
 export type { PageContent } from './page/PageContent.js';
+export type { PageQueryType } from './page/PageContent.js';

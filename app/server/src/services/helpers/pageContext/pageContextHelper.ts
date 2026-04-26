@@ -11,7 +11,11 @@ import { setAuth } from '@shared/redux/slices/auth/authSlice.js';
 import { userHelper, imageHelper, newsHelper } from '../index.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
 import { createStore } from '@shared/redux/store.js';
-import type { PageContent, UserThemeType } from '@shared/types/common/index.js';
+import type {
+	PageContent,
+	PageQueryType,
+	UserThemeType,
+} from '@shared/types/common/index.js';
 
 export const createPageContextHelper = (req?: Request, res?: Response) => {
 	// Build the full request URL when Express request data is available.
@@ -152,36 +156,36 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 				case '/':
 				// News category pages
 				case '/top-headlines':
-					return await this.news.fetchTopHeadlines();
+					return await this.news.fetchTopHeadlines(this.query);
 
 				case '/business':
-					return await this.news.fetchBusiness();
+					return await this.news.fetchBusiness(this.query);
 
 				case '/entertainment':
-					return await this.news.fetchEntertainment();
+					return await this.news.fetchEntertainment(this.query);
 
 				case '/general':
-					return await this.news.fetchGeneral();
+					return await this.news.fetchGeneral(this.query);
 
 				case '/health':
-					return await this.news.fetchHealth();
+					return await this.news.fetchHealth(this.query);
 
 				case '/saved-articles':
-					return await this.news.fetchSavedArticles();
+					return await this.news.fetchSavedArticles(this.query);
 
 				case '/science':
-					return await this.news.fetchScience();
+					return await this.news.fetchScience(this.query);
 
 				case '/sports':
-					return await this.news.fetchSports();
+					return await this.news.fetchSports(this.query);
 
 				case '/technology':
-					return await this.news.fetchTechnology();
+					return await this.news.fetchTechnology(this.query);
 
 				// Fallback for routes with no defined page content yet.
 				default:
 					if (resolvedPath.startsWith('/user/')) {
-						return await this.news.fetchSavedArticles();
+						return await this.news.fetchSavedArticles(this.query);
 					}
 					return {};
 			}
