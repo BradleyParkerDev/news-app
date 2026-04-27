@@ -15,8 +15,10 @@ export const useUIPageHelper = () => {
 
 	useEffect(() => {
 		const routePath = location.pathname;
+		const routeSearch = location.search;
+		const fullRoute = `${routePath}${routeSearch}`;
 
-		if (currentPage.path === routePath && currentPage.isLoading === false) {
+		if (currentPage.path === fullRoute && currentPage.isLoading === false) {
 			return;
 		}
 
@@ -24,14 +26,14 @@ export const useUIPageHelper = () => {
 
 		const getApiPath = () => {
 			if (routePath === '/') {
-				return '/top-headlines';
+				return `/top-headlines${routeSearch}`;
 			}
 
 			if (routePath === `/user/${userName}`) {
-				return '/saved-articles';
+				return `/saved-articles${routeSearch}`;
 			}
 
-			return routePath;
+			return `${routePath}${routeSearch}`;
 		};
 
 		const getPageData = async () => {
@@ -46,11 +48,10 @@ export const useUIPageHelper = () => {
 
 				if (!isMounted) return;
 
-				console.log(pageContent);
 				dispatch(
 					loadCurrentPageState({
 						currentPage: {
-							path: routePath,
+							path: fullRoute,
 							content: pageContent,
 							isLoading: false,
 						},
@@ -62,7 +63,7 @@ export const useUIPageHelper = () => {
 				dispatch(
 					loadCurrentPageState({
 						currentPage: {
-							path: routePath,
+							path: fullRoute,
 							content: {},
 							isLoading: false,
 						},
@@ -76,5 +77,5 @@ export const useUIPageHelper = () => {
 		return () => {
 			isMounted = false;
 		};
-	}, [location.pathname, userName, dispatch]);
+	}, [location.pathname, location.search, userName, dispatch]);
 };
