@@ -3,11 +3,14 @@ import { type Scripts } from '@shared/types/server/react/index.js';
 export const getViteDevServerScripts = (routerContext: any, appState: any) => {
 	let css: string = '';
 	let js: string = '';
+	const viteDevServerOrigin = `http://localhost:${Number(
+		process.env.VITE_PORT || 4002,
+	)}`;
 
 	const viteDevServer = `
 	<!-- React-refresh preamble required by @vitejs/plugin-react -->
 <script type="module">
-	import RefreshRuntime from "http://localhost:4001/@react-refresh";
+	import RefreshRuntime from "${viteDevServerOrigin}/@react-refresh";
 
 	RefreshRuntime.injectIntoGlobalHook(window);
 	window.$RefreshReg$ = () => {};
@@ -15,8 +18,8 @@ export const getViteDevServerScripts = (routerContext: any, appState: any) => {
 	window.__vite_plugin_react_preamble_installed__ = true;
 </script>
 <!-- Vite Dev Server -->
-<script type="module" src="http://localhost:4001/@vite/client"></script>
-<script type="module" src="http://localhost:4001/entry-client.tsx"></script>
+<script type="module" src="${viteDevServerOrigin}/@vite/client"></script>
+<script type="module" src="${viteDevServerOrigin}/entry-client.tsx"></script>
 
 `;
 

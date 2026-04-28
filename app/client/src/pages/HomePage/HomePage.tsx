@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useOutletContext } from 'react-router';
 import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
 import { NewsCard } from '@client/components/index.js';
-import type { SavedArticleType } from '@/shared/types/common/news/NewsArticleTypes.js';
+import type { SavedArticleType } from '@shared/types/common/news/NewsArticleTypes.js';
+import type { PageContent } from '@shared/types/common/index.js';
 import {
 	Pagination,
 	PaginationContent,
@@ -13,38 +14,39 @@ import {
 	PaginationPrevious,
 } from '@client/components/shadcn/pagination.js';
 
-type HomePageContentType = {
-	category?: string;
-	page?: number;
-	limit?: number;
-	articlesOnPage?: number;
-	totalArticles?: number;
-	totalPages?: number;
-	articles?: SavedArticleType[];
-};
-
 const HomePage = () => {
 	const { ui } = useOutletContext<AppOutletContext>();
-
-	const content = (ui.currentPage?.content ?? {}) as HomePageContentType;
-
+	const content = ui.currentPage.content as PageContent;
 	const { page = 1, limit = 25, totalPages = 1, articles = [] } = content;
-
 	const newsArticles = articles;
+
+	const firstPage = 1;
+	const lastPage = totalPages;
+	let middlePage;
+
+	// If the current page is the first page,
+	// show the page right after it as the middle page.
+	if (page === firstPage) {
+		middlePage = firstPage + 1;
+
+		// If the current page is the last page,
+		// show the page right before the last page as the middle page.
+		// Math.max makes sure the middle page never goes below page 2.
+	} else if (page === lastPage) {
+		middlePage = Math.max(firstPage + 1, lastPage - 1);
+
+		// Otherwise, if the current page is somewhere in the middle,
+		// just use the current page itself.
+	} else {
+		middlePage = page;
+	}
+
+	const showLeftEllipsis = middlePage > firstPage + 1;
 
 	useEffect(() => {
 		document.title = `Home | ${ui.appName}`;
 	}, [ui.appName]);
-	const firstPage = 1;
-	const lastPage = totalPages;
-	const middlePage =
-		page === firstPage
-			? firstPage + 1
-			: page === lastPage
-				? Math.max(firstPage + 1, lastPage - 1)
-				: page;
 
-	const showLeftEllipsis = middlePage > firstPage + 1;
 	return (
 		<div id="home-page" className="flex w-full flex-col gap-6 py-4">
 			<div className="w-full px-4 sm:px-5">

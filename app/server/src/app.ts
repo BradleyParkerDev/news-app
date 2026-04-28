@@ -17,10 +17,11 @@ import { newsHelper } from '@server/services/helpers/index.js';
 dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV || 'production';
+const VITE_PORT = Number(process.env.VITE_PORT || 4002);
 const CLIENT_ORIGIN =
 	NODE_ENV === 'production'
 		? 'https://pernapp.bradleyparker.dev'
-		: 'http://localhost:4001';
+		: `http://localhost:${VITE_PORT}`;
 
 const openapi = JSON.parse(
 	fs.readFileSync(path.resolve(process.cwd(), 'openapi.json'), 'utf-8'),

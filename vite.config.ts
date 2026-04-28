@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	const output = generateBuildOutput();
 	// Allow configuring the dev server port via environment variable.
-	const VITE_PORT = Number(env.VITE_PORT || process.env.VITE_PORT || 4001);
+	const VITE_PORT = Number(env.VITE_PORT || process.env.VITE_PORT || 4002);
 	return {
 		root: path.resolve(__dirname, 'app/client'),
 		plugins: [react(), tailwindcss()],
@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
 		server: {
 			port: VITE_PORT,
 			proxy: {
-				'/api': env.VITE_API_URL || 'http://localhost:3001',
+				'/api': env.VITE_API_URL || 'http://localhost:3002',
 			},
 		},
 
