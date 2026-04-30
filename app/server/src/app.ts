@@ -20,7 +20,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production';
 const VITE_PORT = Number(process.env.VITE_PORT || 4002);
 const CLIENT_ORIGIN =
 	NODE_ENV === 'production'
-		? 'https://pernapp.bradleyparker.dev'
+		? 'https://newsapp.bradleyparker.dev'
 		: `http://localhost:${VITE_PORT}`;
 
 const openapi = JSON.parse(
