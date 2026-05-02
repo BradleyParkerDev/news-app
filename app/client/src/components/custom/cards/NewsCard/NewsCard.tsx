@@ -1,6 +1,8 @@
 import { Bookmark, ExternalLink } from 'lucide-react';
 import type { SavedArticleType } from '@/shared/types/common/news/NewsArticleTypes.js';
 import { Button } from '@client/components/shadcn/button.js';
+import { useOutletContext } from 'react-router';
+import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
 
 type NewsCardProps = {
 	article: SavedArticleType;
@@ -32,6 +34,8 @@ const formatPublishedDate = (publishedAt: SavedArticleType['publishedAt']) => {
 };
 
 export const NewsCard = ({ article }: NewsCardProps) => {
+	const { user } = useOutletContext<AppOutletContext>();
+
 	const description =
 		article.description?.trim() ||
 		article.content?.trim() ||
@@ -103,8 +107,12 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 					type="button"
 					variant="outline"
 					size="sm"
-					disabled
+					// disabled
 					aria-label="Save article coming soon"
+					onClick={() => {
+						console.log('Hello, World!');
+						user.deleteArticle(article.articleId);
+					}}
 				>
 					<Bookmark className="mr-1 h-4 w-4" />
 					Save

@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 import type { PageContent, PageQueryType } from '@shared/types/common/index.js';
 import { newsClient } from './newsClient.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
-import { Article } from '@server/database/schemas/Articles.js';
+import { Article, SavedArticle } from '@server/database/schemas/index.js';
 import { db } from '@server/database/db.js';
-import { eq, desc, count } from 'drizzle-orm';
+import { eq, desc, count, and } from 'drizzle-orm';
 
 const getPagination = (query: PageQueryType) => {
 	const page = Math.max(1, Number(query.page ?? 1));
@@ -248,5 +248,24 @@ export const newsHelper = {
 
 	async fetchSavedArticles(query: PageQueryType): Promise<PageContent> {
 		return { category: 'Saved Articles', working: true };
+	},
+	async deleteSavedArticle(userId: string, articleId: string): Promise<void> {
+		await db
+			.delete(SavedArticle)
+			.where(
+				and(
+					eq(SavedArticle.articleId, articleId),
+					eq(SavedArticle.userId, userId),
+				),
+			);
+	},
+
+	async saveArticle(userId: string, articleId: string): Promise<void> {
+		const saveArticleValues = {
+			userId,
+			articleId,
+		};
+
+		await db.insert(SavedArticle).values(saveArticleValues);
 	},
 };

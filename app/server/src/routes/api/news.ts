@@ -14,4 +14,7 @@ router.get('/science', newsController.getScienceArticles);
 router.get('/sports', newsController.getSportsArticles);
 router.get('/technology', newsController.getTechnologyArticles);
 
+router.delete('/delete-saved-article', newsController.deleteSavedArticle);
+router.post('/save-article', newsController.saveArticle);
+
 export default router;

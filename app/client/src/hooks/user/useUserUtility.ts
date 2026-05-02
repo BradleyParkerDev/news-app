@@ -4,6 +4,7 @@ import {
 	useUserAuthHelper,
 	useUserCrudHelper,
 	useImageHelper,
+	useNewsHelper,
 } from './helpers/index.js';
 
 export const useUserUtility = (ui: UIUtility) => {
@@ -15,6 +16,7 @@ export const useUserUtility = (ui: UIUtility) => {
 	const authHelper = useUserAuthHelper({ dispatch, ui });
 	const crudHelper = useUserCrudHelper({ dispatch, ui });
 	const imageHelper = useImageHelper();
+	const newsHelper = useNewsHelper();
 
 	return {
 		firstName,
@@ -24,5 +26,6 @@ export const useUserUtility = (ui: UIUtility) => {
 		...authHelper,
 		...crudHelper,
 		...imageHelper,
+		...newsHelper,
 	};
 };

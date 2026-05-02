@@ -16,15 +16,18 @@ import deleteUser from './user/deleteUser.js';
 import updateUserTheme from './ui/updateUserTheme.js';
 
 // news controller
-import getTopHeadlinesArticles from './news/topHeadlines.js';
-import getBusinessArticles from './news/business.js';
-import getEntertainmentArticles from './news/entertainment.js';
-import getGeneralArticles from './news/general.js';
-import getHealthArticles from './news/health.js';
-import getSavedArticles from './news/savedArticles.js';
-import getScienceArticles from './news/science.js';
-import getSportsArticles from './news/sports.js';
-import getTechnologyArticles from './news/technology.js';
+import getTopHeadlinesArticles from './news/fetchArticles/getTopHeadlinesArticles.js';
+import getBusinessArticles from './news/fetchArticles/getBusinessArticles.js';
+import getEntertainmentArticles from './news/fetchArticles/getEntertainmentArticles.js';
+import getGeneralArticles from './news/fetchArticles/getGeneralArticles.js';
+import getHealthArticles from './news/fetchArticles/getHealthArticles.js';
+import getSavedArticles from './news/fetchArticles/getSavedArticles.js';
+import getScienceArticles from './news/fetchArticles/getScienceArticles.js';
+import getSportsArticles from './news/fetchArticles/getSportsArticles.js';
+import getTechnologyArticles from './news/fetchArticles/getTechnologyArticles.js';
+
+import deleteSavedArticle from './news/userSavedArticles/deleteSavedArticle.js';
+import saveArticle from './news/userSavedArticles/saveArticle.js';
 
 // web controller import
 import web from './web/index.js';
@@ -62,6 +65,8 @@ export const newsController = {
 	getScienceArticles,
 	getSportsArticles,
 	getTechnologyArticles,
+	deleteSavedArticle,
+	saveArticle,
 };
 
 // export webController

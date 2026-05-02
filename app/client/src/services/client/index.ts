@@ -12,6 +12,9 @@ import { toggleUserTheme } from './api/ui/toggleUserTheme.js';
 import { uploadImage } from './api/image/uploadImage.js';
 import { deleteImage } from './api/image/deleteImage.js';
 
+import { deleteSavedArticleFromClient } from './api/news/deleteSavedArticleFromClient.js';
+import { saveArticleFromClient } from './api/news/saveArticleFromClient.js';
+
 export const auth = {
 	loginUser,
 	logoutUser,
@@ -31,9 +34,12 @@ export const image = {
 
 export const ui = { fetchCurrentpageState, toggleUserTheme };
 
+export const news = { deleteSavedArticleFromClient, saveArticleFromClient };
+
 export const clientApiServices = {
 	auth,
 	user,
 	ui,
 	image,
+	news,
 };
