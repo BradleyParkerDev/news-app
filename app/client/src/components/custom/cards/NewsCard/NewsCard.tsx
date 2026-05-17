@@ -1,14 +1,14 @@
 import { Bookmark, ExternalLink } from 'lucide-react';
-import type { SavedArticleType } from '@/shared/types/common/news/NewsArticleTypes.js';
+import type { ArticleType } from '@/shared/types/common/news/NewsArticleTypes.js';
 import { Button } from '@client/components/shadcn/button.js';
 import { useOutletContext } from 'react-router';
 import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
 
 type NewsCardProps = {
-	article: SavedArticleType;
+	article: ArticleType;
 };
 
-const getPublishedDate = (publishedAt: SavedArticleType['publishedAt']) => {
+const getPublishedDate = (publishedAt: ArticleType['publishedAt']) => {
 	if (!publishedAt) {
 		return null;
 	}
@@ -19,7 +19,7 @@ const getPublishedDate = (publishedAt: SavedArticleType['publishedAt']) => {
 	return Number.isNaN(date.getTime()) ? null : date;
 };
 
-const formatPublishedDate = (publishedAt: SavedArticleType['publishedAt']) => {
+const formatPublishedDate = (publishedAt: ArticleType['publishedAt']) => {
 	const date = getPublishedDate(publishedAt);
 
 	if (!date) {
@@ -111,7 +111,8 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 					aria-label="Save article coming soon"
 					onClick={() => {
 						console.log('Hello, World!');
-						user.deleteArticle(article.articleId);
+						// user.deleteArticle(article.articleId);
+						user.saveArticle(article.articleId);
 					}}
 				>
 					<Bookmark className="mr-1 h-4 w-4" />

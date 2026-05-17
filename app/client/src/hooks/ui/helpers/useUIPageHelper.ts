@@ -43,11 +43,12 @@ export const useUIPageHelper = () => {
 
 			try {
 				const apiPath = getApiPath();
+				console.log(apiPath);
 				const pageContent =
 					await clientApiServices.ui.fetchCurrentpageState(apiPath);
 
 				if (!isMounted) return;
-
+				console.log(pageContent);
 				dispatch(
 					loadCurrentPageState({
 						currentPage: {

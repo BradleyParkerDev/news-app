@@ -151,6 +151,9 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 
 			const resolvedPath = normalizeRoutePath(requestedPath);
 
+			const userId = this.req?.body?.userId;
+			this.query.userId = userId ? userId : null;
+
 			switch (resolvedPath) {
 				// Home page
 				case '/':

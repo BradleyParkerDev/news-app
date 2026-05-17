@@ -4,21 +4,22 @@ import { newsClient } from './newsClient.js';
 import { loggerFactory } from '@server/lib/logger/index.js';
 import { Article, SavedArticle } from '@server/database/schemas/index.js';
 import { db } from '@server/database/db.js';
-import { eq, desc, count, and } from 'drizzle-orm';
+import { eq, desc, count, and, getTableColumns } from 'drizzle-orm';
 
 const getPagination = (query: PageQueryType) => {
 	const page = Math.max(1, Number(query.page ?? 1));
 	const limit = Math.max(1, Number(query.limit ?? 25));
 	const offset = (page - 1) * limit;
+	const userId = query.userId ? query.userId : null;
 
-	return { page, limit, offset };
+	return { page, limit, offset, userId };
 };
 
 export const newsHelper = {
 	client: newsClient,
 
 	async fetchTopHeadlines(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -45,7 +46,7 @@ export const newsHelper = {
 	},
 
 	async fetchBusiness(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -73,7 +74,7 @@ export const newsHelper = {
 	},
 
 	async fetchEntertainment(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -102,7 +103,7 @@ export const newsHelper = {
 	},
 
 	async fetchGeneral(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -131,7 +132,7 @@ export const newsHelper = {
 	},
 
 	async fetchHealth(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -160,7 +161,7 @@ export const newsHelper = {
 	},
 
 	async fetchScience(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -189,7 +190,7 @@ export const newsHelper = {
 	},
 
 	async fetchSports(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -218,7 +219,7 @@ export const newsHelper = {
 	},
 
 	async fetchTechnology(query: PageQueryType): Promise<PageContent> {
-		const { page, limit, offset } = getPagination(query);
+		const { page, limit, offset, userId } = getPagination(query);
 		const articles = await db
 			.select()
 			.from(Article)
@@ -247,6 +248,39 @@ export const newsHelper = {
 	},
 
 	async fetchSavedArticles(query: PageQueryType): Promise<PageContent> {
+		const { page, limit, offset, userId } = getPagination(query);
+		if (userId) {
+			const articles = await db
+				.select(getTableColumns(Article))
+				.from(SavedArticle)
+				.innerJoin(
+					Article,
+					eq(SavedArticle.articleId, Article.articleId),
+				)
+				.where(eq(SavedArticle.userId, userId))
+				.orderBy(desc(SavedArticle.lastUpdated))
+				.limit(limit)
+				.offset(offset);
+
+			const [totalResult] = await db
+				.select({ totalArticles: count() })
+				.from(SavedArticle)
+				.where(eq(SavedArticle.userId, userId));
+			const totalArticles = Number(totalResult?.totalArticles ?? 0);
+			const totalPages = Math.ceil(totalArticles / limit);
+
+			return {
+				category: 'Saved Articles',
+				page: page,
+				limit: limit,
+				articlesOnPage: articles.length,
+				totalArticles: totalArticles,
+				totalPages: totalPages,
+				articles: articles,
+				working: true,
+			};
+		}
+
 		return { category: 'Saved Articles', working: true };
 	},
 	async deleteSavedArticle(userId: string, articleId: string): Promise<void> {
@@ -266,6 +300,18 @@ export const newsHelper = {
 			articleId,
 		};
 
-		await db.insert(SavedArticle).values(saveArticleValues);
+		await db
+			.insert(SavedArticle)
+			.values({
+				userId,
+				articleId,
+			})
+			.onConflictDoNothing({
+				target: [SavedArticle.userId, SavedArticle.articleId],
+			});
 	},
+	async checkIfUserHasSavedArticle(
+		userId: string,
+		articleId: string,
+	): Promise<void> {},
 };

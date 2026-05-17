@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useOutletContext } from 'react-router';
 import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
 import { NewsCard } from '@client/components/index.js';
-import type { SavedArticleType } from '@shared/types/common/news/NewsArticleTypes.js';
+import type { ArticleType } from '@shared/types/common/news/NewsArticleTypes.js';
 import type { PageContent } from '@shared/types/common/index.js';
 import {
 	Pagination,
@@ -56,7 +56,7 @@ const HomePage = () => {
 			</div>
 
 			<div className="flex w-full flex-wrap justify-center gap-4 px-2">
-				{newsArticles.map((article: SavedArticleType) => (
+				{newsArticles.map((article: ArticleType) => (
 					<NewsCard
 						key={article.articleId ?? article.url}
 						article={article}

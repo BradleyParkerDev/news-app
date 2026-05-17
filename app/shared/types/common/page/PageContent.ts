@@ -1,4 +1,4 @@
-import type { SavedArticleType } from '@shared/types/common/news/NewsArticleTypes.js';
+import type { ArticleType } from '@shared/types/common/news/NewsArticleTypes.js';
 
 export type PageContent = {
 	category?: string;
@@ -7,11 +7,12 @@ export type PageContent = {
 	articlesOnPage?: number;
 	totalArticles?: number;
 	totalPages?: number;
-	articles?: SavedArticleType[];
+	articles?: ArticleType[];
 	working?: boolean;
 };
 export type PageQueryType = {
 	page?: string;
 	limit?: string;
 	path?: string;
+	userId?: string | null;
 };

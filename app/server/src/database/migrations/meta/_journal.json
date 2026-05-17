@@ -22,6 +22,13 @@
       "when": 1776996691344,
       "tag": "0002_loud_captain_britain",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779002079160,
+      "tag": "0003_lonely_vance_astro",
+      "breakpoints": true
     }
   ]
 }
