@@ -115,8 +115,11 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 						user.saveArticle(article.articleId);
 					}}
 				>
-					<Bookmark className="mr-1 h-4 w-4" />
-					Save
+					<Bookmark
+						className={`mr-1 h-4 w-4 ${article.savedArticleId ? 'text-red-400' : ''}`}
+					/>
+					{article.savedArticleId ? 'Saved' : 'Save'}
+					{/* Save */}
 				</Button>
 			</div>
 		</div>

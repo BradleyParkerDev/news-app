@@ -20,29 +20,64 @@ export const newsHelper = {
 
 	async fetchTopHeadlines(query: PageQueryType): Promise<PageContent> {
 		const { page, limit, offset, userId } = getPagination(query);
-		const articles = await db
-			.select()
-			.from(Article)
-			.orderBy(desc(Article.publishedAt))
-			.limit(limit)
-			.offset(offset);
 
-		const [totalResult] = await db
-			.select({ totalArticles: count() })
-			.from(Article);
-		const totalArticles = Number(totalResult?.totalArticles ?? 0);
-		const totalPages = Math.ceil(totalArticles / limit);
+		if (userId) {
+			const articles = await db
+				.select({
+					...getTableColumns(Article),
+					savedArticleId: SavedArticle.savedArticleId,
+				})
+				.from(Article)
+				.leftJoin(
+					SavedArticle,
+					and(
+						eq(SavedArticle.articleId, Article.articleId),
+						eq(SavedArticle.userId, userId),
+					),
+				)
+				.orderBy(desc(Article.publishedAt))
+				.limit(limit)
+				.offset(offset);
+			const [totalResult] = await db
+				.select({ totalArticles: count() })
+				.from(Article);
+			const totalArticles = Number(totalResult?.totalArticles ?? 0);
+			const totalPages = Math.ceil(totalArticles / limit);
+			return {
+				category: 'Top Headlines',
+				page: page,
+				limit: limit,
+				articlesOnPage: articles.length,
+				totalArticles: totalArticles,
+				totalPages: totalPages,
+				articles: articles,
+				working: true,
+			};
+		} else {
+			const articles = await db
+				.select()
+				.from(Article)
+				.orderBy(desc(Article.publishedAt))
+				.limit(limit)
+				.offset(offset);
 
-		return {
-			category: 'Top Headlines',
-			page: page,
-			limit: limit,
-			articlesOnPage: articles.length,
-			totalArticles: totalArticles,
-			totalPages: totalPages,
-			articles: articles,
-			working: true,
-		};
+			const [totalResult] = await db
+				.select({ totalArticles: count() })
+				.from(Article);
+			const totalArticles = Number(totalResult?.totalArticles ?? 0);
+			const totalPages = Math.ceil(totalArticles / limit);
+
+			return {
+				category: 'Top Headlines',
+				page: page,
+				limit: limit,
+				articlesOnPage: articles.length,
+				totalArticles: totalArticles,
+				totalPages: totalPages,
+				articles: articles,
+				working: true,
+			};
+		}
 	},
 
 	async fetchBusiness(query: PageQueryType): Promise<PageContent> {
@@ -246,12 +281,15 @@ export const newsHelper = {
 			working: true,
 		};
 	},
-
 	async fetchSavedArticles(query: PageQueryType): Promise<PageContent> {
 		const { page, limit, offset, userId } = getPagination(query);
+
 		if (userId) {
 			const articles = await db
-				.select(getTableColumns(Article))
+				.select({
+					...getTableColumns(Article),
+					savedArticleId: SavedArticle.savedArticleId,
+				})
 				.from(SavedArticle)
 				.innerJoin(
 					Article,
@@ -266,6 +304,7 @@ export const newsHelper = {
 				.select({ totalArticles: count() })
 				.from(SavedArticle)
 				.where(eq(SavedArticle.userId, userId));
+
 			const totalArticles = Number(totalResult?.totalArticles ?? 0);
 			const totalPages = Math.ceil(totalArticles / limit);
 

@@ -1,7 +1,9 @@
 import type { InferSelectModel } from 'drizzle-orm';
 import { Article } from '@server/database/schemas/Articles.js';
 
-export type ArticleType = InferSelectModel<typeof Article>;
+export type ArticleType = InferSelectModel<typeof Article> & {
+	savedArticleId?: string | null;
+};
 
 export const articleCategories = [
 	'business',
