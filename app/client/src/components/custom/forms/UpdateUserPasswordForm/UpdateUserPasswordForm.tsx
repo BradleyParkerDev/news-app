@@ -74,8 +74,6 @@ export function UpdateUserPasswordForm({ ...props }) {
 				toast.error(result.message);
 			}
 		} catch (error) {
-			console.error(error);
-
 			toast.error('Something went wrong. Please try again.');
 		}
 	};

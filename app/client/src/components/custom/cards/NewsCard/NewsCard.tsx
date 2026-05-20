@@ -110,8 +110,6 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 					// disabled
 					aria-label="Save article coming soon"
 					onClick={() => {
-						console.log('Hello, World!');
-
 						{
 							article.savedArticleId
 								? user.deleteArticle(article.savedArticleId)

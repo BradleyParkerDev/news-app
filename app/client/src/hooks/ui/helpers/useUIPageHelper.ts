@@ -15,6 +15,7 @@ export const useUIPageHelper = () => {
 		(state) => state.ui,
 	);
 	const userName = useAppSelector((state) => state.user.userName);
+	const { isAuth } = useAppSelector((state) => state.auth);
 
 	useEffect(() => {
 		const routePath = location.pathname;
@@ -52,21 +53,20 @@ export const useUIPageHelper = () => {
 
 			try {
 				const apiPath = getApiPath();
-				console.log(apiPath);
 				const pageContent =
 					await clientApiServices.ui.fetchCurrentpageState(apiPath);
 
 				if (!isMounted) return;
-				console.log(pageContent);
 				dispatch(
 					loadCurrentPageState({
 						currentPage: {
 							path: fullRoute,
-							content: pageContent,
+							content: pageContent ?? {},
 							isLoading: false,
 						},
 					}),
 				);
+
 				dispatch(
 					toggleUserSavedArticlesUpdated({
 						userSavedArticlesUpdated: false,

@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { type UIState } from '@shared/types/common/redux/index.js';
 
 const initialState: UIState = {
-	appName: '',
+	appName: 'News App',
 	theme: 'light',
 	authPageForm: '',
 	currentPage: { path: '', content: {}, isLoading: false },

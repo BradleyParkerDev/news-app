@@ -74,8 +74,9 @@ export const useUserAuthHelper = ({ dispatch, ui }: UseUserAuthHelperProps) => {
 			const result = response.data;
 
 			if (result.success) {
-				dispatch(resetUser());
+				ui.navigateTo('/');
 				dispatch(resetAuth());
+				dispatch(resetUser());
 				dispatch(removeUserProfileImage());
 				dispatch(resetUI());
 			}

@@ -53,7 +53,6 @@ export function LoginForm({
 		// ✅ This will be type-safe and validated.
 
 		const result = await user.login(loginCredentials);
-		console.log(loginCredentials);
 
 		if (result.success) {
 			toast.success('User successfully logged in!');

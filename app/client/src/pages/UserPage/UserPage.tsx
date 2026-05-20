@@ -96,9 +96,11 @@ const UserPage = () => {
 							<h2 className="text-lg font-semibold">
 								Saved Articles
 							</h2>
-							<p className="text-muted-foreground text-sm">
-								Articles you have saved will appear here.
-							</p>
+							{articles.length === 0 && (
+								<p className="text-muted-foreground text-sm">
+									Articles you have saved will appear here.
+								</p>
+							)}
 						</div>
 					</section>
 

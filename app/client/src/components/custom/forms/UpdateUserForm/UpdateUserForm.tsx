@@ -46,18 +46,13 @@ export function UpdateUserForm({
 	const onSubmit = async (userUpdateData: UpdateUserFormValues) => {
 		try {
 			const response = await user.update(userUpdateData);
-
 			if (response.success) {
 				toast.message(response.message);
 				reset();
 			} else {
 				toast.error(response.message);
 			}
-
-			console.log(userUpdateData);
 		} catch (error) {
-			console.error('[UPDATE USER ERROR]', error);
-
 			toast.error('Something went wrong. Please try again.');
 		}
 	};
