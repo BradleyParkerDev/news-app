@@ -22,7 +22,7 @@ const UserPage = () => {
 	// =========================
 	// Page context and content
 	// =========================
-	const { ui, auth } = useOutletContext<AppOutletContext>();
+	const { ui, auth, user } = useOutletContext<AppOutletContext>();
 	const content = ui.currentPage.content as PageContent;
 	const { page = 1, limit = 25, totalPages = 1, articles = [] } = content;
 	const newsArticles = articles;
@@ -113,93 +113,95 @@ const UserPage = () => {
 					</div>
 
 					{/* Saved articles pagination */}
-					<div className="px-4">
-						<Pagination>
-							<PaginationContent>
-								{/* Previous page */}
-								<PaginationItem>
-									<PaginationPrevious
-										href="#"
-										onClick={() => {
-											ui.navigateTo(
-												`/user?page=${Math.max(1, page - 1)}&limit=${limit}`,
-											);
-										}}
-									/>
-								</PaginationItem>
-
-								{/* First page */}
-								<PaginationItem>
-									<PaginationLink
-										href="#"
-										isActive={page === firstPage}
-										onClick={() => {
-											ui.navigateTo(
-												`/user?page=${firstPage}&limit=${limit}`,
-											);
-										}}
-									>
-										{firstPage}
-									</PaginationLink>
-								</PaginationItem>
-
-								{/* Left ellipsis when pages are skipped */}
-								{showLeftEllipsis ? (
+					{articles.length !== 0 && (
+						<div className="px-4">
+							<Pagination>
+								<PaginationContent>
+									{/* Previous page */}
 									<PaginationItem>
-										<PaginationEllipsis />
+										<PaginationPrevious
+											href="#"
+											onClick={() => {
+												ui.navigateTo(
+													`/user/${user.userName}?page=${Math.max(1, page - 1)}&limit=${limit}`,
+												);
+											}}
+										/>
 									</PaginationItem>
-								) : null}
 
-								{/* Middle page */}
-								{lastPage > 1 &&
-								middlePage !== firstPage &&
-								middlePage !== lastPage ? (
+									{/* First page */}
 									<PaginationItem>
 										<PaginationLink
 											href="#"
-											isActive={page === middlePage}
+											isActive={page === firstPage}
 											onClick={() => {
 												ui.navigateTo(
-													`/user?page=${middlePage}&limit=${limit}`,
+													`/user/${user.userName}?page=${firstPage}&limit=${limit}`,
 												);
 											}}
 										>
-											{middlePage}
+											{firstPage}
 										</PaginationLink>
 									</PaginationItem>
-								) : null}
 
-								{/* Last page */}
-								{lastPage > 1 ? (
+									{/* Left ellipsis when pages are skipped */}
+									{showLeftEllipsis ? (
+										<PaginationItem>
+											<PaginationEllipsis />
+										</PaginationItem>
+									) : null}
+
+									{/* Middle page */}
+									{lastPage > 1 &&
+									middlePage !== firstPage &&
+									middlePage !== lastPage ? (
+										<PaginationItem>
+											<PaginationLink
+												href="#"
+												isActive={page === middlePage}
+												onClick={() => {
+													ui.navigateTo(
+														`/user/${user.userName}?page=${middlePage}&limit=${limit}`,
+													);
+												}}
+											>
+												{middlePage}
+											</PaginationLink>
+										</PaginationItem>
+									) : null}
+
+									{/* Last page */}
+									{lastPage > 1 ? (
+										<PaginationItem>
+											<PaginationLink
+												href="#"
+												isActive={page === lastPage}
+												onClick={() => {
+													ui.navigateTo(
+														`/user/${user.userName}?page=${lastPage}&limit=${limit}`,
+													);
+												}}
+											>
+												{lastPage}
+											</PaginationLink>
+										</PaginationItem>
+									) : null}
+
+									{/* Next page */}
 									<PaginationItem>
-										<PaginationLink
+										<PaginationNext
 											href="#"
-											isActive={page === lastPage}
 											onClick={() => {
 												ui.navigateTo(
-													`/user?page=${lastPage}&limit=${limit}`,
+													`/user/${user.userName}?page=${Math.min(lastPage, page + 1)}&limit=${limit}`,
 												);
 											}}
-										>
-											{lastPage}
-										</PaginationLink>
+										/>
 									</PaginationItem>
-								) : null}
-
-								{/* Next page */}
-								<PaginationItem>
-									<PaginationNext
-										href="#"
-										onClick={() => {
-											ui.navigateTo(
-												`/user?page=${Math.min(lastPage, page + 1)}&limit=${limit}`,
-											);
-										}}
-									/>
-								</PaginationItem>
-							</PaginationContent>
-						</Pagination>
-					</div>
+								</PaginationContent>
+							</Pagination>
+						</div>
+					)}
 				</div>
 			)}
 		</div>

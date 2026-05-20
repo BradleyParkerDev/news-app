@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@shared/redux/hooks.js';
 import { clientApiServices } from '@client/services/client/index.js';
 import type { APIResponseType } from '@shared/types/common/index.js';
 import { HTTPStatus } from '@shared/types/common/index.js';
+import { toggleUserSavedArticlesUpdated } from '@shared/redux/slices/ui/uiSlice.js';
 
 export const useNewsHelper = () => {
 	const dispatch = useAppDispatch();
@@ -10,15 +11,23 @@ export const useNewsHelper = () => {
 
 	const { profileImageUrl, profileImageKey } = image;
 
-	const deleteArticle = async (articleId: string) => {
+	const deleteArticle = async (savedArticleId: string) => {
 		try {
 			const response =
 				await clientApiServices.news.deleteSavedArticleFromClient(
-					articleId,
+					savedArticleId,
 				);
 			const result = response.data;
 
 			console.log(result);
+
+			result.success
+				? dispatch(
+						toggleUserSavedArticlesUpdated({
+							userSavedArticlesUpdated: true,
+						}),
+					)
+				: '';
 
 			return result;
 		} catch (error) {
@@ -44,7 +53,13 @@ export const useNewsHelper = () => {
 			const result = response.data;
 
 			console.log(result);
-
+			result.success
+				? dispatch(
+						toggleUserSavedArticlesUpdated({
+							userSavedArticlesUpdated: true,
+						}),
+					)
+				: '';
 			return result;
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response?.data) {

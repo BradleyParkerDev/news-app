@@ -14,18 +14,18 @@ const deleteSavedArticle = async (
 	res: Response,
 ): Promise<void> => {
 	const userId = req.body.userId;
-	const articleId = req.body.articleId;
+	const savedArticleId = req.body.savedArticleId;
 
-	if (!userId || !articleId) {
+	if (!userId || !savedArticleId) {
 		const response: APIResponseType<null> = {
 			success: false,
-			message: 'Missing userId or articleId.',
+			message: 'Missing userId or savedArticleId.',
 			statusCode: HTTPStatus.BAD_REQUEST,
 			data: null,
 		};
 
 		loggerFactory.news.error(
-			`DELETE - ${req.originalUrl} - Missing userId or articleId.`,
+			`DELETE - ${req.originalUrl} - Missing userId or savedArticleId.`,
 		);
 
 		res.status(HTTPStatus.BAD_REQUEST).json(response);
@@ -33,7 +33,7 @@ const deleteSavedArticle = async (
 	}
 
 	try {
-		await newsHelper.deleteSavedArticle(userId, articleId);
+		await newsHelper.deleteSavedArticle(userId, savedArticleId);
 
 		const response: APIResponseType<null> = {
 			success: true,
@@ -43,7 +43,7 @@ const deleteSavedArticle = async (
 		};
 
 		loggerFactory.news.info(
-			`DELETE - ${req.originalUrl} - articleId: ${articleId} - userId: ${userId}`,
+			`DELETE - ${req.originalUrl} - savedArticleId: ${savedArticleId} - userId: ${userId}`,
 		);
 
 		res.status(HTTPStatus.OK).json(response);
@@ -56,7 +56,7 @@ const deleteSavedArticle = async (
 		};
 
 		loggerFactory.news.error(
-			`DELETE - ${req.originalUrl} - articleId: ${articleId} - userId: ${userId} - Error deleting saved article: ${error}`,
+			`DELETE - ${req.originalUrl} - savedArticleId: ${savedArticleId} - userId: ${userId} - Error deleting saved article: ${error}`,
 		);
 
 		res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json(response);

@@ -12,4 +12,5 @@ export type UIState = {
 	theme: UserThemeType;
 	authPageForm: string;
 	currentPage: CurrentPage;
+	userSavedArticlesUpdated: boolean;
 };

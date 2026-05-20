@@ -111,15 +111,18 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 					aria-label="Save article coming soon"
 					onClick={() => {
 						console.log('Hello, World!');
-						// user.deleteArticle(article.articleId);
-						user.saveArticle(article.articleId);
+
+						{
+							article.savedArticleId
+								? user.deleteArticle(article.savedArticleId)
+								: user.saveArticle(article.articleId);
+						}
 					}}
 				>
 					<Bookmark
 						className={`mr-1 h-4 w-4 ${article.savedArticleId ? 'text-red-400' : ''}`}
 					/>
 					{article.savedArticleId ? 'Saved' : 'Save'}
-					{/* Save */}
 				</Button>
 			</div>
 		</div>

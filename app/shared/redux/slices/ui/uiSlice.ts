@@ -1,11 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { type UIState } from '@/shared/types/common/redux/index.js';
+import { type UIState } from '@shared/types/common/redux/index.js';
 
 const initialState: UIState = {
 	appName: '',
 	theme: 'light',
 	authPageForm: '',
 	currentPage: { path: '', content: {}, isLoading: false },
+	userSavedArticlesUpdated: false,
 };
 
 const uiSlice = createSlice({
@@ -43,13 +44,22 @@ const uiSlice = createSlice({
 		) => {
 			state.currentPage = action.payload.currentPage;
 		},
-		toggleCurrentIsLoading: (
+		toggleCurrentPageIsLoading: (
 			state,
 			action: PayloadAction<{
 				currentPage: UIState['currentPage'];
 			}>,
 		) => {
 			state.currentPage.isLoading = action.payload.currentPage.isLoading;
+		},
+		toggleUserSavedArticlesUpdated: (
+			state,
+			action: PayloadAction<{
+				userSavedArticlesUpdated: UIState['userSavedArticlesUpdated'];
+			}>,
+		) => {
+			state.userSavedArticlesUpdated =
+				action.payload.userSavedArticlesUpdated;
 		},
 	},
 });
@@ -60,6 +70,7 @@ export const {
 	resetUI,
 	handleAuthPageFormToggle,
 	loadCurrentPageState,
-	toggleCurrentIsLoading,
+	toggleCurrentPageIsLoading,
+	toggleUserSavedArticlesUpdated,
 } = uiSlice.actions;
 export default uiSlice.reducer;

@@ -3,14 +3,17 @@ import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@shared/redux/hooks.js';
 import {
 	loadCurrentPageState,
-	toggleCurrentIsLoading,
+	toggleCurrentPageIsLoading,
+	toggleUserSavedArticlesUpdated,
 } from '@shared/redux/slices/ui/uiSlice.js';
 import { clientApiServices } from '@client/services/client/index.js';
 
 export const useUIPageHelper = () => {
 	const dispatch = useAppDispatch();
 	const location = useLocation();
-	const currentPage = useAppSelector((state) => state.ui.currentPage);
+	const { currentPage, userSavedArticlesUpdated } = useAppSelector(
+		(state) => state.ui,
+	);
 	const userName = useAppSelector((state) => state.user.userName);
 
 	useEffect(() => {
@@ -18,7 +21,11 @@ export const useUIPageHelper = () => {
 		const routeSearch = location.search;
 		const fullRoute = `${routePath}${routeSearch}`;
 
-		if (currentPage.path === fullRoute && currentPage.isLoading === false) {
+		if (
+			currentPage.path === fullRoute &&
+			currentPage.isLoading === false &&
+			userSavedArticlesUpdated === false
+		) {
 			return;
 		}
 
@@ -38,7 +45,9 @@ export const useUIPageHelper = () => {
 
 		const getPageData = async () => {
 			dispatch(
-				toggleCurrentIsLoading({ currentPage: { isLoading: true } }),
+				toggleCurrentPageIsLoading({
+					currentPage: { isLoading: true },
+				}),
 			);
 
 			try {
@@ -58,6 +67,11 @@ export const useUIPageHelper = () => {
 						},
 					}),
 				);
+				dispatch(
+					toggleUserSavedArticlesUpdated({
+						userSavedArticlesUpdated: false,
+					}),
+				);
 			} catch {
 				if (!isMounted) return;
 
@@ -70,6 +84,11 @@ export const useUIPageHelper = () => {
 						},
 					}),
 				);
+				dispatch(
+					toggleUserSavedArticlesUpdated({
+						userSavedArticlesUpdated: false,
+					}),
+				);
 			}
 		};
 
@@ -77,6 +96,17 @@ export const useUIPageHelper = () => {
 
 		return () => {
 			isMounted = false;
+			dispatch(
+				toggleUserSavedArticlesUpdated({
+					userSavedArticlesUpdated: false,
+				}),
+			);
 		};
-	}, [location.pathname, location.search, userName, dispatch]);
+	}, [
+		location.pathname,
+		location.search,
+		userName,
+		userSavedArticlesUpdated,
+		dispatch,
+	]);
 };
