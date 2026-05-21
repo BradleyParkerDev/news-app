@@ -1,5 +1,5 @@
 {
-  "id": "bacad823-e595-4fbe-8e78-df2f86899746",
+  "id": "558380a6-6e2e-4c34-a3dd-12fb9d9615a4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -519,11 +519,66 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "saved_articles_saved_article_id_unique": {
-          "name": "saved_articles_saved_article_id_unique",
+        "saved_articles_user_id_article_id_unique": {
+          "name": "saved_articles_user_id_article_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "saved_article_id"
+            "user_id",
+            "article_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.api_calls": {
+      "name": "api_calls",
+      "schema": "",
+      "columns": {
+        "api_call_id": {
+          "name": "api_call_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "api_name": {
+          "name": "api_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_updated": {
+          "name": "last_updated",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "api_calls_api_call_id_unique": {
+          "name": "api_calls_api_call_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_call_id"
+          ]
+        },
+        "api_calls_api_name_unique": {
+          "name": "api_calls_api_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_name"
           ]
         }
       },

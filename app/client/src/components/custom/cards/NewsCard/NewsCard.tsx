@@ -3,7 +3,11 @@ import type { ArticleType } from '@/shared/types/common/news/NewsArticleTypes.js
 import { Button } from '@client/components/shadcn/button.js';
 import { useOutletContext } from 'react-router';
 import type { AppOutletContext } from '@shared/types/client/hooks/index.js';
-
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from '@client/components/shadcn/tooltip.js';
 type NewsCardProps = {
 	article: ArticleType;
 };
@@ -34,7 +38,7 @@ const formatPublishedDate = (publishedAt: ArticleType['publishedAt']) => {
 };
 
 export const NewsCard = ({ article }: NewsCardProps) => {
-	const { user } = useOutletContext<AppOutletContext>();
+	const { user, auth } = useOutletContext<AppOutletContext>();
 
 	const description =
 		article.description?.trim() ||
@@ -102,7 +106,9 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 						<ExternalLink className="ml-1 h-4 w-4" />
 					</a>
 				</Button>
-
+				{/* 
+				<Tooltip>
+					<TooltipTrigger asChild> */}
 				<Button
 					type="button"
 					variant="outline"
@@ -122,6 +128,13 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 					/>
 					{article.savedArticleId ? 'Saved' : 'Save'}
 				</Button>
+				{/* </TooltipTrigger>
+					{auth.isAuth === false && (
+					<TooltipContent>
+						<p>Add to library</p>
+					</TooltipContent>
+					)}
+				</Tooltip> */}
 			</div>
 		</div>
 	);

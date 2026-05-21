@@ -94,7 +94,18 @@ export const createAuthService = (req?: Request, res?: Response) => {
 				} else {
 					await this.createUserSession();
 				}
-			} catch {}
+			} catch (error) {
+				if (error instanceof Error) {
+					loggerFactory.authService.error(
+						`[Auth Check Error] - ${error.message}`,
+					);
+					loggerFactory.authService.error(error.stack ?? '');
+				} else {
+					loggerFactory.authService.error(
+						`[Auth Check Error] - Unknown error: ${String(error)}`,
+					);
+				}
+			}
 		},
 		/**
 		 * Create a user or guest session and set the session cookie.
