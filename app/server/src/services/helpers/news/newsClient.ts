@@ -9,7 +9,7 @@ import {
 } from '@/shared/types/common/news/NewsArticleTypes.js';
 import { APICall, Article } from '@server/database/schemas/index.js';
 import { db } from '@server/database/db.js';
-import { eq } from 'drizzle-orm';
+import { eq, count } from 'drizzle-orm';
 
 // Load dotenv
 dotenv.config();
@@ -53,10 +53,12 @@ export const newsClient = {
 	async fetchLatestArticlesFromAPI(): Promise<ArticlesReturnType | null> {
 		const newsAPILastCalledAt = await this.checkLastAPICall();
 		const now = Date.now();
+		const articleCount = await this.countExistingArticlesInDatabase();
 
 		if (
 			newsAPILastCalledAt !== null &&
-			now - newsAPILastCalledAt < this.apiCallFrequencyMs
+			now - newsAPILastCalledAt < this.apiCallFrequencyMs &&
+			articleCount > 0
 		) {
 			loggerFactory.externalAPI.info(
 				`[NewsAPI] - Not enough time has passed to call NewsAPI.`,
@@ -196,6 +198,13 @@ export const newsClient = {
 			);
 			return null;
 		}
+	},
+	async countExistingArticlesInDatabase(): Promise<number> {
+		const [numberOfArticlesInDatabase] = await db
+			.select({ value: count() })
+			.from(Article);
+
+		return Number(numberOfArticlesInDatabase?.value ?? 0);
 	},
 
 	async getArticlesFromAPI(
