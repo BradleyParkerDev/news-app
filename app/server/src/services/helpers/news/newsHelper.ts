@@ -17,12 +17,12 @@ const getPagination = (query: PageQueryType) => {
 	return { page, limit, offset, userId };
 };
 
-const ARTICLE_CLEAN_UP_MODE = process.env.ARTICLE_CLEAN_UP_MODE ?? 'short';
+const ARTICLE_CLEAN_UP_MODE = process.env.ARTICLE_CLEAN_UP_MODE ?? 'medium';
 const ARTICLE_CLEAN_UP_SHORT_HOURS = Number(
-	process.env.ARTICLE_CLEAN_UP_SHORT_HOURS ?? 24,
+	process.env.ARTICLE_CLEAN_UP_SHORT_HOURS ?? 36,
 );
 const ARTICLE_CLEAN_UP_MEDIUM_DAYS = Number(
-	process.env.ARTICLE_CLEAN_UP_MEDIUM_DAYS ?? 5,
+	process.env.ARTICLE_CLEAN_UP_MEDIUM_DAYS ?? 7,
 );
 const ARTICLE_CLEAN_UP_LONG_MONTHS = Number(
 	process.env.ARTICLE_CLEAN_UP_LONG_MONTHS ?? 18,
