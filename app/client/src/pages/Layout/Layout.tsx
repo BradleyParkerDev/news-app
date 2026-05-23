@@ -7,7 +7,7 @@ import {
 	useUserUtility,
 } from '@client/hooks/index.js';
 import { Toaster } from '@client/components/custom/toast/sonner.js';
-
+import { TooltipProvider } from '@client/components/custom/tooltip.js';
 const Layout = () => {
 	const auth = useAuthUtility();
 	const ui = useUIUtility();
@@ -43,23 +43,25 @@ const Layout = () => {
 	}, [ui.navDrawerIsOpen]);
 
 	return (
-		<div
-			id="container"
-			className={`relative min-h-dvh w-screen max-w-[1400px] ${ui.navDrawerIsOpen ? 'shadow-lg dark:shadow-white/5' : ''}`}
-		>
-			<Navbar ui={ui} auth={auth} user={user} />
+		<TooltipProvider>
 			<div
-				onClick={() => {
-					ui.closeAvatarPopover();
-					// ui.closeAvatarPopoverWithRedux();
-				}}
-				id="content"
-				className={`min-h-[calc(100dvh-4rem)] w-full`}
+				id="container"
+				className={`relative min-h-dvh w-screen max-w-[1400px] ${ui.navDrawerIsOpen ? 'shadow-lg dark:shadow-white/5' : ''}`}
 			>
-				<Outlet context={{ ui, auth, user }} />
+				<Navbar ui={ui} auth={auth} user={user} />
+				<div
+					onClick={() => {
+						ui.closeAvatarPopover();
+						// ui.closeAvatarPopoverWithRedux();
+					}}
+					id="content"
+					className={`min-h-[calc(100dvh-4rem)] w-full`}
+				>
+					<Outlet context={{ ui, auth, user }} />
+				</div>
+				<Toaster />
 			</div>
-			<Toaster />
-		</div>
+		</TooltipProvider>
 	);
 };
 

@@ -7,7 +7,8 @@ import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
-} from '@client/components/shadcn/tooltip.js';
+	Arrow,
+} from '@client/components/custom/tooltip.js';
 type NewsCardProps = {
 	article: ArticleType;
 };
@@ -106,35 +107,40 @@ export const NewsCard = ({ article }: NewsCardProps) => {
 						<ExternalLink className="ml-1 h-4 w-4" />
 					</a>
 				</Button>
-				{/* 
+
 				<Tooltip>
-					<TooltipTrigger asChild> */}
-				<Button
-					type="button"
-					variant="outline"
-					size="sm"
-					// disabled
-					aria-label="Save article coming soon"
-					onClick={() => {
-						{
-							article.savedArticleId
-								? user.deleteArticle(article.savedArticleId)
-								: user.saveArticle(article.articleId);
-						}
-					}}
-				>
-					<Bookmark
-						className={`mr-1 h-4 w-4 ${article.savedArticleId ? 'text-red-400' : ''}`}
-					/>
-					{article.savedArticleId ? 'Saved' : 'Save'}
-				</Button>
-				{/* </TooltipTrigger>
+					<TooltipTrigger asChild>
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							// disabled
+							aria-label="Save article coming soon"
+							onClick={() => {
+								if (auth.isAuth) {
+									if (article.savedArticleId) {
+										user.deleteArticle(
+											article.savedArticleId,
+										);
+									} else {
+										user.saveArticle(article.articleId);
+									}
+								}
+							}}
+						>
+							<Bookmark
+								className={`mr-1 h-4 w-4 ${article.savedArticleId ? 'text-red-400' : ''}`}
+							/>
+							{article.savedArticleId ? 'Saved' : 'Save'}
+						</Button>
+					</TooltipTrigger>
 					{auth.isAuth === false && (
-					<TooltipContent>
-						<p>Add to library</p>
-					</TooltipContent>
+						<TooltipContent>
+							<p>Login to save.</p>
+							<Arrow />
+						</TooltipContent>
 					)}
-				</Tooltip> */}
+				</Tooltip>
 			</div>
 		</div>
 	);

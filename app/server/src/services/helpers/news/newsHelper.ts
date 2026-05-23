@@ -1,10 +1,12 @@
 import dotenv from 'dotenv';
 import type { PageContent, PageQueryType } from '@shared/types/common/index.js';
 import { newsClient } from './newsClient.js';
-import { loggerFactory } from '@server/lib/logger/index.js';
 import { Article, SavedArticle } from '@server/database/schemas/index.js';
 import { db } from '@server/database/db.js';
-import { eq, desc, count, and, getTableColumns } from 'drizzle-orm';
+import { eq, desc, count, and, getTableColumns, lt } from 'drizzle-orm';
+
+// Load dotenv
+dotenv.config();
 
 const getPagination = (query: PageQueryType) => {
 	const page = Math.max(1, Number(query.page ?? 1));
@@ -15,8 +17,41 @@ const getPagination = (query: PageQueryType) => {
 	return { page, limit, offset, userId };
 };
 
+const ARTICLE_CLEAN_UP_MODE = process.env.ARTICLE_CLEAN_UP_MODE ?? 'short';
+const ARTICLE_CLEAN_UP_SHORT_HOURS = Number(
+	process.env.ARTICLE_CLEAN_UP_SHORT_HOURS ?? 24,
+);
+const ARTICLE_CLEAN_UP_MEDIUM_DAYS = Number(
+	process.env.ARTICLE_CLEAN_UP_MEDIUM_DAYS ?? 5,
+);
+const ARTICLE_CLEAN_UP_LONG_MONTHS = Number(
+	process.env.ARTICLE_CLEAN_UP_LONG_MONTHS ?? 18,
+);
+
+const getArticleCleanUpDate = () => {
+	const now = Date.now();
+
+	switch (ARTICLE_CLEAN_UP_MODE) {
+		case 'short':
+			return new Date(
+				now - ARTICLE_CLEAN_UP_SHORT_HOURS * 60 * 60 * 1000,
+			);
+		case 'long':
+			return new Date(
+				now -
+					ARTICLE_CLEAN_UP_LONG_MONTHS * 30.42 * 24 * 60 * 60 * 1000,
+			);
+		case 'medium':
+		default:
+			return new Date(
+				now - ARTICLE_CLEAN_UP_MEDIUM_DAYS * 24 * 60 * 60 * 1000,
+			);
+	}
+};
+
 export const newsHelper = {
 	client: newsClient,
+	articleCleanUpDate: getArticleCleanUpDate(),
 
 	async fetchTopHeadlines(query: PageQueryType): Promise<PageContent> {
 		const { page, limit, offset, userId } = getPagination(query);
@@ -603,6 +638,17 @@ export const newsHelper = {
 
 		return { category: 'Saved Articles', working: true };
 	},
+
+	async deleteOlderArticles(): Promise<number> {
+		const cleanUpDate = getArticleCleanUpDate();
+
+		const deletedArticles = await db
+			.delete(Article)
+			.where(lt(Article.createdAt, cleanUpDate))
+			.returning({ articleId: Article.articleId });
+
+		return deletedArticles.length;
+	},
 	async deleteSavedArticle(
 		userId: string,
 		savedArticleId: string,
@@ -633,8 +679,4 @@ export const newsHelper = {
 				target: [SavedArticle.userId, SavedArticle.articleId],
 			});
 	},
-	async checkIfUserHasSavedArticle(
-		userId: string,
-		articleId: string,
-	): Promise<void> {},
 };
