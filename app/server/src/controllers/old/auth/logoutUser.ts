@@ -13,10 +13,8 @@ dotenv.config();
 const logoutUser = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const auth = createAuthService(req, res);
-		const { userId, sessionId } = ((req as any).authContext ?? {}) as {
-			userId?: string;
-			sessionId?: string;
-		};
+
+		const { sessionId, userId } = req.body;
 
 		if (!sessionId) {
 			const response: APIResponseType<null> = {

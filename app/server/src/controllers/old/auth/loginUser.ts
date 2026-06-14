@@ -13,9 +13,7 @@ dotenv.config();
 const loginUser = async (req: Request, res: Response): Promise<void> => {
 	const auth = createAuthService(req, res);
 
-	const { sessionId } = ((req as any).authContext ?? {}) as {
-		sessionId: string;
-	};
+	const sessionId = req.body.sessionId;
 
 	const userLoginCredentials: LoginCredentialsDataType = {
 		userName: req.body.userName,

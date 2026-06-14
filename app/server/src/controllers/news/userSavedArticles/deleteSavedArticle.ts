@@ -13,7 +13,9 @@ const deleteSavedArticle = async (
 	req: Request,
 	res: Response,
 ): Promise<void> => {
-	const userId = req.body.userId;
+	const { userId } = ((req as any).authContext ?? {}) as {
+		userId?: string;
+	};
 	const savedArticleId = req.body.savedArticleId;
 
 	if (!userId || !savedArticleId) {

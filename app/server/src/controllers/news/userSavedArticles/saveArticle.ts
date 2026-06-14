@@ -10,7 +10,9 @@ import { newsHelper } from '@server/services/helpers/index.js';
 dotenv.config();
 
 const saveArticle = async (req: Request, res: Response): Promise<void> => {
-	const userId = req.body.userId;
+	const { userId } = ((req as any).authContext ?? {}) as {
+		userId?: string;
+	};
 	const articleId = req.body.articleId;
 	console.log(req.body);
 	if (!userId || !articleId) {
