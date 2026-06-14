@@ -86,8 +86,9 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 		// Load app-wide and page-specific data into Redux for the current request.
 		async loadAppDataIntoRedux(userTheme: UserThemeType) {
 			const appName = process.env.UI_APP_NAME ?? 'News App';
-			const userId = this.req?.body?.userId;
-
+			const { userId } = ((req as any).authContext ?? {}) as {
+				userId?: string;
+			};
 			// Always load the selected theme into Redux first.
 			this.store.dispatch(setTheme({ theme: userTheme }));
 
@@ -151,8 +152,10 @@ export const createPageContextHelper = (req?: Request, res?: Response) => {
 
 			const resolvedPath = normalizeRoutePath(requestedPath);
 
-			const userId = this.req?.body?.userId;
-			this.query.userId = userId ? userId : null;
+			const { userId } = ((req as any).authContext ?? {}) as {
+				userId?: string;
+			};
+			this.query.userId = userId ?? undefined;
 
 			switch (resolvedPath) {
 				// Home page
